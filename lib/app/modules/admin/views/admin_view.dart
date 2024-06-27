@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodrecipeapp/app/modules/admin/views/resep/managementFood_view.dart';
+import 'package:foodrecipeapp/app/modules/admin/views/resepPremium/managementResepPremium_view.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -7,6 +8,7 @@ import 'package:iconsax/iconsax.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/colors.dart';
 import '../controllers/admin_controller.dart';
+import 'resepPremium/resepPremium_view.dart';
 
 class AdminView extends GetView<AdminController> {
   const AdminView({Key? key}) : super(key: key);
@@ -51,7 +53,7 @@ class AdminView extends GetView<AdminController> {
             AdminButton(
               label: 'Recipe Premium',
               onPressed: () {
-                // Get.to(() =>  EditFood());
+                Get.to(() => const ManagementResep());
               },
             ),
             const SizedBox(height: 20),

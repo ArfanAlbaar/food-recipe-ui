@@ -48,6 +48,7 @@ class AdminController extends GetxController {
     Get.offAllNamed(Routes.HOME);
   }
 
+  // * BAGIAN API RESEP
   void fetchFoods() async {
     final token = _storage.readToken();
     final response = await http.get(
@@ -129,4 +130,5 @@ class AdminController extends GetxController {
           snackPosition: SnackPosition.BOTTOM);
     }
   }
+  // * AKHIR BAGIAN API RESEP
 }

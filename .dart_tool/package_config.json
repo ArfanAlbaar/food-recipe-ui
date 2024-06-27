@@ -92,6 +92,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "file_picker",
+      "rootUri": "file:///Users/zxura/.pub-cache/hosted/pub.dev/file_picker-7.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///Users/zxura/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -106,6 +112,12 @@
     {
       "name": "flutter_lints",
       "rootUri": "file:///Users/zxura/.pub-cache/hosted/pub.dev/flutter_lints-4.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "flutter_plugin_android_lifecycle",
+      "rootUri": "file:///Users/zxura/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.18",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -416,7 +428,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-06-27T07:26:58.573131Z",
+  "generated": "2024-06-27T10:37:21.303394Z",
   "generator": "pub",
   "generatorVersion": "3.1.5"
 }

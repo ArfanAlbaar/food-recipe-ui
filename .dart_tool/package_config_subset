@@ -58,6 +58,10 @@ ffi
 3.0
 file:///Users/zxura/.pub-cache/hosted/pub.dev/ffi-2.1.0/
 file:///Users/zxura/.pub-cache/hosted/pub.dev/ffi-2.1.0/lib/
+file_picker
+2.19
+file:///Users/zxura/.pub-cache/hosted/pub.dev/file_picker-7.0.2/
+file:///Users/zxura/.pub-cache/hosted/pub.dev/file_picker-7.0.2/lib/
 flutter_launcher_icons
 2.18
 file:///Users/zxura/.pub-cache/hosted/pub.dev/flutter_launcher_icons-0.13.1/
@@ -66,6 +70,10 @@ flutter_lints
 3.1
 file:///Users/zxura/.pub-cache/hosted/pub.dev/flutter_lints-4.0.0/
 file:///Users/zxura/.pub-cache/hosted/pub.dev/flutter_lints-4.0.0/lib/
+flutter_plugin_android_lifecycle
+3.1
+file:///Users/zxura/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.18/
+file:///Users/zxura/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.18/lib/
 flutter_svg
 2.19
 file:///Users/zxura/.pub-cache/hosted/pub.dev/flutter_svg-2.0.10+1/
