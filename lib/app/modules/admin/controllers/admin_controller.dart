@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:foodrecipeapp/app/StorageService.dart';
+import 'package:foodrecipeapp/app/models/premium_list.dart';
 import 'package:foodrecipeapp/app/models/resep.dart';
-import 'package:foodrecipeapp/app/modules/admin/views/resep/managementFood_view.dart';
 import 'package:foodrecipeapp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -10,10 +10,12 @@ import 'package:http/http.dart' as http;
 import '../../../models/transaction.dart';
 import '../../home/recipe_service.dart';
 import '../admin_service.dart';
+import '../views/resep/managementResep_view.dart';
 
 class AdminController extends GetxController {
   var recipes = <Resep>[].obs; // Observable list of Resep
   var transactions = <Transaction>[].obs;
+  var premiums = <PremiumList>[].obs;
 
   RxBool isFavorite = false.obs;
   var isLoading = false.obs;
@@ -21,17 +23,14 @@ class AdminController extends GetxController {
 
   final StorageService _storage = StorageService();
   final RecipeService recipeService = RecipeService();
+  final AdminService _adminService = AdminService();
 
   @override
   void onInit() {
     super.onInit();
     final token = _storage.readToken();
     isLoggedIn(token != null);
-    fetchAllRecipes();
-    fetchTransactions();
   }
-
-  final AdminService _adminService = AdminService();
 
   Future<void> loginAdmin(String username, String password) async {
     isLoading(true);
@@ -59,7 +58,7 @@ class AdminController extends GetxController {
     try {
       isLoading(true);
       List<dynamic> result = await recipeService.getListRecipe();
-      recipes.assignAll(result.map((item) => Resep.fromJson(item)));
+      recipes.assignAll(result);
     } catch (e) {
       Get.snackbar('Error', 'Failed to fetch recipes');
     } finally {
@@ -82,7 +81,7 @@ class AdminController extends GetxController {
       recipes.add(food);
       Get.snackbar('Success', 'Food added successfully',
           snackPosition: SnackPosition.BOTTOM);
-      Get.to(() => ManagementFood());
+      Get.to(() => ManagementResep());
     } else {
       print('Failed to add food: ${response.body}');
       Get.snackbar('Error', 'Failed to add food',
@@ -92,14 +91,11 @@ class AdminController extends GetxController {
 
   Future<void> editFood(int index, Resep newFood) async {
     isLoading(true);
-    final token = StorageService().readToken();
     final response = await _adminService.editFood(index, newFood);
-    // print(response.body);
     if (response) {
-      // foods[index] = newFood;
       Get.snackbar('Success', 'Food updated successfully',
           snackPosition: SnackPosition.BOTTOM);
-      Get.to(() => ManagementFood());
+      Get.to(() => ManagementResep());
     } else {
       Get.snackbar('Error', 'Failed to update food',
           snackPosition: SnackPosition.BOTTOM);
@@ -110,21 +106,20 @@ class AdminController extends GetxController {
   void deleteFood(int index) async {
     final token = StorageService().readToken();
     final response = await http.delete(
-      Uri.parse('http://localhost:8080/api/recipe/${index}'),
+      Uri.parse('http://localhost:8080/api/recipe/$index'),
       headers: {
         'API-TOKEN': token!,
       },
     );
     if (response.statusCode == 200) {
-      Get.snackbar('Success', 'Food deleted successfully',
+      Get.snackbar('Success', 'Recipe deleted successfully',
           snackPosition: SnackPosition.BOTTOM);
       fetchAllRecipes();
     } else {
-      Get.snackbar('Error', 'Failed to delete food',
+      Get.snackbar('Error', 'Failed to delete recipe',
           snackPosition: SnackPosition.BOTTOM);
     }
   }
-  // * AKHIR BAGIAN API RESEP
 
   // * BAGIAN TRANSACTION
   Future<void> fetchTransactions() async {
@@ -151,4 +146,30 @@ class AdminController extends GetxController {
     }
   }
   // * AKHIR BAGIAN TRANSACTION
+
+  // * BAGIAN PREMIUM
+  void fetchAllPremiums() async {
+    try {
+      isLoading(true);
+      List<PremiumList> result = await _adminService.getListPremium();
+      premiums.assignAll(result);
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to fetch premiums');
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void deletePremium(int index) async {
+    final response = await _adminService.deletePremium(index);
+    if (response) {
+      Get.snackbar('Success', 'Premium recipe deleted successfully',
+          snackPosition: SnackPosition.BOTTOM);
+      fetchAllPremiums();
+    } else {
+      Get.snackbar('Error', 'Failed to delete premium recipe',
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+  // * AKHIR BAGIAN PREMIUM
 }

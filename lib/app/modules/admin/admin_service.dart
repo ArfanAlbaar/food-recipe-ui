@@ -1,16 +1,16 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-
 import '../../StorageService.dart';
 import '../../models/resep.dart';
 import '../../models/transaction.dart';
+import '../../models/premium_list.dart';
 
 class AdminService {
   static final String baseUrl = "http://localhost:8080/api";
 
   final StorageService _storage = StorageService();
-  //LOGIN
+
+  // LOGIN
   static Future<String> loginAdmin(String username, String password) async {
     final url = Uri.parse('$baseUrl/user/auth/login');
     final response = await http.post(
@@ -26,17 +26,18 @@ class AdminService {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      String token = jsonResponse['data']['token']; // Extract the token
-      StorageService().writeToken(token); // Store token using StorageService
+      String token = jsonResponse['data']['token'];
+      StorageService().writeToken(token);
       return token;
     } else {
       throw Exception('Failed to login');
     }
   }
 
+  // LOGOUT
   Future<void> logout() async {
     final url = Uri.parse('$baseUrl/user/auth/logout');
-    final token = StorageService().readToken();
+    final token = _storage.readToken();
 
     try {
       final response = await http.delete(
@@ -48,33 +49,19 @@ class AdminService {
       );
 
       if (response.statusCode == 200) {
-        // Logout berhasil
         print('Logout berhasil');
       } else {
-        // Handle error response
         print('Logout gagal dengan status: ${response.statusCode}');
       }
     } catch (e) {
-      // Handle network error
       print('Error saat logout: $e');
     }
   }
 
-  Future<List<Resep>> getListRecipe() async {
-    final url = Uri.parse('$baseUrl');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      List<dynamic> jsonData = json.decode(response.body);
-      return jsonData.map((item) => Resep.fromJson(item)).toList();
-    } else {
-      throw Exception('Failed to load recipes');
-    }
-  }
-
+  // EDIT FOOD
   Future<bool> editFood(int index, Resep newFood) async {
-    final token = StorageService().readToken();
-    final url = Uri.parse('$baseUrl/recipe/${index}');
+    final token = _storage.readToken();
+    final url = Uri.parse('$baseUrl/recipe/$index');
     final response = await http.put(
       url,
       headers: <String, String>{
@@ -85,14 +72,13 @@ class AdminService {
     );
 
     if (response.statusCode == 202) {
-      bool respon = true;
-      return respon;
+      return true;
     } else {
       return false;
     }
   }
 
-  // Fetch transactions
+  // FETCH TRANSACTIONS
   Future<List<Transaction>> fetchTransactions() async {
     final token = _storage.readToken();
     if (token == null) throw Exception('No token found');
@@ -101,7 +87,7 @@ class AdminService {
     final response = await http.get(
       url,
       headers: {
-        'API-TOKEN': token,
+        'API-TOKEN': token!,
       },
     );
 
@@ -113,7 +99,7 @@ class AdminService {
     }
   }
 
-  // Delete transaction
+  // DELETE TRANSACTION
   Future<void> deleteTransaction(int id) async {
     final token = _storage.readToken();
     if (token == null) throw Exception('No token found');
@@ -122,12 +108,49 @@ class AdminService {
     final response = await http.delete(
       url,
       headers: {
-        'API-TOKEN': token,
+        'API-TOKEN': token!,
       },
     );
 
     if (response.statusCode != 200) {
       throw Exception('Failed to delete transaction');
+    }
+  }
+
+  // LIST PREMIUM
+  Future<List<PremiumList>> getListPremium() async {
+    final token = _storage.readToken();
+    final url = Uri.parse('$baseUrl/premium/auth/admin/list');
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'API-TOKEN': token!,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => PremiumList.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to load premiums');
+    }
+  }
+
+  // DELETE PREMIUM
+  Future<bool> deletePremium(int index) async {
+    final token = _storage.readToken();
+    final response = await http.delete(
+      Uri.parse('$baseUrl/premium/$index'),
+      headers: {
+        'API-TOKEN': token!,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
