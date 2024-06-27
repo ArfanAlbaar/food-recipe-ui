@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 import '../../StorageService.dart';
 import '../../models/resep.dart';
+import '../../models/transaction.dart';
 
 class AdminService {
   static final String baseUrl = "http://localhost:8080/api";
@@ -88,6 +89,45 @@ class AdminService {
       return respon;
     } else {
       return false;
+    }
+  }
+
+  // Fetch transactions
+  Future<List<Transaction>> fetchTransactions() async {
+    final token = _storage.readToken();
+    if (token == null) throw Exception('No token found');
+
+    final url = Uri.parse('$baseUrl/transaction/list');
+    final response = await http.get(
+      url,
+      headers: {
+        'API-TOKEN': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => Transaction.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to load transactions');
+    }
+  }
+
+  // Delete transaction
+  Future<void> deleteTransaction(int id) async {
+    final token = _storage.readToken();
+    if (token == null) throw Exception('No token found');
+
+    final url = Uri.parse('$baseUrl/transaction/$id');
+    final response = await http.delete(
+      url,
+      headers: {
+        'API-TOKEN': token,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to delete transaction');
     }
   }
 }

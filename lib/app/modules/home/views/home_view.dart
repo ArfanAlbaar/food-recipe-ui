@@ -61,22 +61,6 @@ class HomeView extends GetView<RecipeController> {
                 const SizedBox(
                   height: 30,
                 ),
-                Text(
-                  "Daftar Anggota Kelompok",
-                  style: GoogleFonts.poppins(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 25, bottom: 20),
-                  child: Divider(
-                    thickness: 2,
-                    color: hijauSage,
-                  ),
-                ),
-                const TableAnggota(),
-                SizedBox(height: 20),
               ],
             ),
           ),

@@ -47,6 +47,7 @@ class TableAnggota extends StatelessWidget {
           ),
           ...users.map((user) {
             return TableRow(
+              decoration: BoxDecoration(color: Colors.white),
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),

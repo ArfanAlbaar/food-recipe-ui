@@ -7,11 +7,13 @@ import 'package:foodrecipeapp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../models/transaction.dart';
 import '../../home/recipe_service.dart';
 import '../admin_service.dart';
 
 class AdminController extends GetxController {
   var recipes = <Resep>[].obs; // Observable list of Resep
+  var transactions = <Transaction>[].obs;
 
   RxBool isFavorite = false.obs;
   var isLoading = false.obs;
@@ -26,6 +28,7 @@ class AdminController extends GetxController {
     final token = _storage.readToken();
     isLoggedIn(token != null);
     fetchAllRecipes();
+    fetchTransactions();
   }
 
   final AdminService _adminService = AdminService();
@@ -122,4 +125,30 @@ class AdminController extends GetxController {
     }
   }
   // * AKHIR BAGIAN API RESEP
+
+  // * BAGIAN TRANSACTION
+  Future<void> fetchTransactions() async {
+    isLoading(true);
+    try {
+      transactions.value = await _adminService.fetchTransactions();
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to load transactions');
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> deleteTransaction(int id) async {
+    isLoading(true);
+    try {
+      await _adminService.deleteTransaction(id);
+      transactions.removeWhere((transaction) => transaction.id == id);
+      Get.snackbar('Success', 'Transaction deleted successfully');
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to delete transaction');
+    } finally {
+      isLoading(false);
+    }
+  }
+  // * AKHIR BAGIAN TRANSACTION
 }

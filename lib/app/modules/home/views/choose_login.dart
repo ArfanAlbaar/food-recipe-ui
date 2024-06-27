@@ -29,12 +29,12 @@ class ChooseLogin extends GetView<RecipeController> {
     if (adminController.isLoggedIn.value) {
       // Redirect to admin page
       WidgetsBinding.instance?.addPostFrameCallback((_) {
-        Get.offNamed(Routes.ADMIN);
+        Get.toNamed(Routes.ADMIN);
       });
     } else if (memberController.isLoggedIn.value) {
       // Redirect to member page
       WidgetsBinding.instance?.addPostFrameCallback((_) {
-        Get.offNamed(Routes.MEMBER);
+        Get.toNamed(Routes.MEMBER);
       });
     }
     return Scaffold(

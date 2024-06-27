@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodrecipeapp/app/modules/home/widgetshome/tableAnggota.dart';
 // import 'package:flutter/widgets.dart';
 import 'package:foodrecipeapp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
@@ -49,6 +50,10 @@ class SplashScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Spacer(),
+                TableAnggota(),
+                SizedBox(
+                  height: 10,
+                ),
                 Text(
                   "Memasak &\nMakanan Lezat dengan Mudah",
                   style: GoogleFonts.poppins(
