@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:foodrecipeapp/app/StorageService.dart';
+import 'package:foodrecipeapp/app/models/premium_list.dart';
 import 'package:foodrecipeapp/app/models/resep.dart';
 import 'package:foodrecipeapp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import '../views/resep/managementResep_view.dart';
 
 class AdminController extends GetxController {
   var recipes = <Resep>[].obs; // Observable list of Resep
+  var premiums = <PremiumList>[].obs;
 
   RxBool isFavorite = false.obs;
   var isLoading = false.obs;
@@ -25,7 +27,8 @@ class AdminController extends GetxController {
     super.onInit();
     final token = _storage.readToken();
     isLoggedIn(token != null);
-    fetchAllRecipes();
+    // fetchAllRecipes();
+    // fetchAllPremiums();
   }
 
   final AdminService _adminService = AdminService();
@@ -113,13 +116,37 @@ class AdminController extends GetxController {
       },
     );
     if (response.statusCode == 200) {
-      Get.snackbar('Success', 'Food deleted successfully',
+      Get.snackbar('Success', 'Recipe deleted successfully',
           snackPosition: SnackPosition.BOTTOM);
       fetchAllRecipes();
     } else {
-      Get.snackbar('Error', 'Failed to delete food',
+      Get.snackbar('Error', 'Failed to delete recipe',
           snackPosition: SnackPosition.BOTTOM);
     }
   }
   // * AKHIR BAGIAN API RESEP
+
+  void fetchAllPremiums() async {
+    try {
+      isLoading(true);
+      List<dynamic> result = await _adminService.getListPremium();
+      premiums.assignAll(result.map((item) => PremiumList.fromJson(item)));
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to fetch recipes');
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void deletePremium(int index) async {
+    final response = await _adminService.deletePremium(index);
+    if (response) {
+      Get.snackbar('Success', 'Premium recipe deleted successfully',
+          snackPosition: SnackPosition.BOTTOM);
+      fetchAllPremiums();
+    } else {
+      Get.snackbar('Error', 'Failed to delete premium recipe',
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
 }

@@ -59,18 +59,6 @@ class AdminService {
     }
   }
 
-  Future<List<Resep>> getListRecipe() async {
-    final url = Uri.parse('$baseUrl');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      List<dynamic> jsonData = json.decode(response.body);
-      return jsonData.map((item) => Resep.fromJson(item)).toList();
-    } else {
-      throw Exception('Failed to load recipes');
-    }
-  }
-
   Future<bool> editFood(int index, Resep newFood) async {
     final token = StorageService().readToken();
     final url = Uri.parse('$baseUrl/recipe/${index}');
@@ -86,6 +74,41 @@ class AdminService {
     if (response.statusCode == 202) {
       bool respon = true;
       return respon;
+    } else {
+      return false;
+    }
+  }
+
+  // LIST PREMIUM
+  Future<List<dynamic>> getListPremium() async {
+    final token = StorageService().readToken();
+    final url = Uri.parse('$baseUrl/premium/auth/admin/list');
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'API-TOKEN': token!,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load recipes');
+    }
+  }
+
+  //DELETE PREMIUM
+  Future<bool> deletePremium(int index) async {
+    final token = StorageService().readToken();
+    final response = await http.delete(
+      Uri.parse('$baseUrl/premium/$index'),
+      headers: {
+        'API-TOKEN': token!,
+      },
+    );
+    if (response.statusCode == 200) {
+      return true;
     } else {
       return false;
     }
