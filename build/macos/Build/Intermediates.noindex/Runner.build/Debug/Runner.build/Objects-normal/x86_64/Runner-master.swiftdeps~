@@ -1,0 +1,8 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "6e405198399d1c661125be655d225528c2d4942808c85d3b75bd5159deb958f5"
+build_start_time: [1719480505, 291542053]
+build_end_time: [1719480505, 483255863]
+inputs:
+  "/Users/zxura/Desktop/projectuasBaru/recipe-food/macos/Flutter/GeneratedPluginRegistrant.swift": !private [1719480256, 456809043]
+  "/Users/zxura/Desktop/projectuasBaru/recipe-food/macos/Runner/AppDelegate.swift": !private [1718884554, 185271739]
+  "/Users/zxura/Desktop/projectuasBaru/recipe-food/macos/Runner/MainFlutterWindow.swift": !private [1718884554, 193874359]
