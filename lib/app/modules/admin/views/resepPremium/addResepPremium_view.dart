@@ -1,16 +1,17 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:file_picker/file_picker.dart';
+
 import '../../../../widgets/colors.dart';
 
-class AddResepPdfView extends StatefulWidget {
-  const AddResepPdfView({super.key});
+class AddResepPremiumView extends StatefulWidget {
+  const AddResepPremiumView({super.key});
 
   @override
   _ResepPremiumViewState createState() => _ResepPremiumViewState();
 }
 
-class _ResepPremiumViewState extends State<AddResepPdfView> {
+class _ResepPremiumViewState extends State<AddResepPremiumView> {
   String? _fileName;
 
   Future<void> _pickFile() async {

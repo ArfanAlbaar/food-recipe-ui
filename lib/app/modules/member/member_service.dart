@@ -8,7 +8,7 @@ class MemberService {
   static final String baseUrl = "http://localhost:8080/api";
 
   //REGISTER
-  static Future<String> registerMember(
+  static Future<bool> registerMember(
       String username, String name, String password, String phoneNumber) async {
     final url = Uri.parse('$baseUrl/member');
     final response = await http.post(
@@ -26,9 +26,10 @@ class MemberService {
 
     if (response.statusCode == 200) {
       String jsonResponse = jsonDecode(response.body);
-      return response.body;
+      return true;
     } else {
       throw Exception('Failed to register');
+      return false;
     }
   }
 

@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:foodrecipeapp/app/StorageService.dart';
 import 'package:foodrecipeapp/app/models/resep.dart';
-import 'package:foodrecipeapp/app/modules/admin/views/resep/managementFood_view.dart';
 import 'package:foodrecipeapp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../home/recipe_service.dart';
 import '../admin_service.dart';
+import '../views/resep/managementResep_view.dart';
 
 class AdminController extends GetxController {
   var recipes = <Resep>[].obs; // Observable list of Resep
@@ -79,7 +79,7 @@ class AdminController extends GetxController {
       recipes.add(food);
       Get.snackbar('Success', 'Food added successfully',
           snackPosition: SnackPosition.BOTTOM);
-      Get.to(() => ManagementFood());
+      Get.to(() => ManagementResep());
     } else {
       print('Failed to add food: ${response.body}');
       Get.snackbar('Error', 'Failed to add food',
@@ -96,7 +96,7 @@ class AdminController extends GetxController {
       // foods[index] = newFood;
       Get.snackbar('Success', 'Food updated successfully',
           snackPosition: SnackPosition.BOTTOM);
-      Get.to(() => ManagementFood());
+      Get.to(() => ManagementResep());
     } else {
       Get.snackbar('Error', 'Failed to update food',
           snackPosition: SnackPosition.BOTTOM);

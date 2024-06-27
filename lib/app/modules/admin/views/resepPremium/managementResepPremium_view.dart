@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodrecipeapp/app/modules/admin/views/resepPremium/resepPremium_view.dart';
+import 'package:foodrecipeapp/app/modules/admin/views/resepPremium/addResepPremium_view.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -10,8 +10,8 @@ import '../../controllers/admin_controller.dart';
 // import 'addfood_view.dart';
 // import 'editfood_view.dart'; // Import your Makanan model
 
-class ManagementResep extends GetView<AdminController> {
-  const ManagementResep({Key? key}) : super(key: key);
+class ManagementResepPremium extends GetView<AdminController> {
+  const ManagementResepPremium({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ManagementResep extends GetView<AdminController> {
         backgroundColor: hijauSage,
         actions: [
           IconButton(
-              onPressed: () => Get.to(() => AddResepPdfView()),
+              onPressed: () => Get.to(() => AddResepPremiumView()),
               icon: const Icon(Iconsax.add5))
         ],
       ),

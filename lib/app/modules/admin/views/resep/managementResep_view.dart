@@ -9,8 +9,8 @@ import '../../controllers/admin_controller.dart';
 import 'addfood_view.dart';
 import 'editfood_view.dart'; // Import your Makanan model
 
-class ManagementFood extends GetView<AdminController> {
-  const ManagementFood({
+class ManagementResep extends GetView<AdminController> {
+  const ManagementResep({
     super.key,
   });
 

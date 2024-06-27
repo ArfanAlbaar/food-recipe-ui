@@ -12,12 +12,12 @@ class MemberController extends GetxController {
     final response = await MemberService.registerMember(
         username, name, password, phoneNumber);
 
-    if (response != null) {
-      Get.offAllNamed(Routes.LOGINMEMBER); //ARAHKAN KE PEMBAYARAN
+    if (response) {
+      isLoading(false);
+
     } else {
       Get.snackbar('Error', 'Register gagal');
     }
-    isLoading(false);
   }
 
   var isLoading = false.obs;
