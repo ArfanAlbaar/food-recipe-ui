@@ -72,7 +72,6 @@ class ListRecipes extends StatelessWidget {
                         ),
                         width: 200, // Width of each recipe card
                         child: Column(
-                          // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Image.network(recipes[id]['imgLink'],
                                 height: 100,
@@ -89,25 +88,6 @@ class ListRecipes extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 8),
-                            // Text(
-                            //   'Ingredients: ${recipes[id]['ingredients']}',
-                            //   style: GoogleFonts.poppins(
-                            //     fontSize: 14,
-                            //   ),
-                            //   maxLines: 2, // Limit to 2 lines for ingredients
-                            //   overflow: TextOverflow
-                            //       .ellipsis, // Ellipsis for overflow
-                            // ),
-                            // SizedBox(height: 8),
-                            // Text(
-                            //   'Instructions: ${recipes[id]['instructions']}',
-                            //   style: GoogleFonts.poppins(
-                            //     fontSize: 14,
-                            //   ),
-                            //   maxLines: 2, // Limit to 2 lines for instructions
-                            //   overflow: TextOverflow
-                            //       .ellipsis, // Ellipsis for overflow
-                            // ),
                           ],
                         ),
                       ),

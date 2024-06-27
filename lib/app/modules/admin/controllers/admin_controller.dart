@@ -1,27 +1,31 @@
 import 'dart:convert';
+
+import 'package:foodrecipeapp/app/StorageService.dart';
 import 'package:foodrecipeapp/app/models/resep.dart';
 import 'package:foodrecipeapp/app/modules/admin/views/resep/managementFood_view.dart';
 import 'package:foodrecipeapp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import '../../home/recipe_service.dart';
 import '../admin_service.dart';
-import 'package:foodrecipeapp/app/StorageService.dart';
 
 class AdminController extends GetxController {
-  var foods = <Resep>[].obs; // Observable list of Resep
+  var recipes = <Resep>[].obs; // Observable list of Resep
 
   RxBool isFavorite = false.obs;
   var isLoading = false.obs;
   var isLoggedIn = false.obs;
 
   final StorageService _storage = StorageService();
+  final RecipeService recipeService = RecipeService();
 
   @override
   void onInit() {
     super.onInit();
     final token = _storage.readToken();
     isLoggedIn(token != null);
-    fetchFoods();
+    fetchAllRecipes();
   }
 
   final AdminService _adminService = AdminService();
@@ -48,20 +52,15 @@ class AdminController extends GetxController {
     Get.offAllNamed(Routes.HOME);
   }
 
-  void fetchFoods() async {
-    final token = _storage.readToken();
-    final response = await http.get(
-      Uri.parse('http://localhost:8080/api/recipe'),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      foods.value = jsonResponse.map((data) => Resep.fromJson(data)).toList();
-    } else {
-      throw Exception('Failed to load foods');
+  void fetchAllRecipes() async {
+    try {
+      isLoading(true);
+      List<dynamic> result = await recipeService.getListRecipe();
+      recipes.assignAll(result.map((item) => Resep.fromJson(item)));
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to fetch recipes');
+    } finally {
+      isLoading(false);
     }
   }
 
@@ -77,7 +76,7 @@ class AdminController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      foods.add(food);
+      recipes.add(food);
       Get.snackbar('Success', 'Food added successfully',
           snackPosition: SnackPosition.BOTTOM);
       Get.to(() => ManagementFood());
@@ -88,19 +87,13 @@ class AdminController extends GetxController {
     }
   }
 
-  void editFood(int index, Resep newFood) async {
+  Future<void> editFood(int index, Resep newFood) async {
+    isLoading(true);
     final token = StorageService().readToken();
-    final response = await http.put(
-      Uri.parse('http://localhost:8080/api/recipe/${index}'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'API-TOKEN': token!,
-      },
-      body: jsonEncode(newFood.toJson()),
-    );
-    print(response.body);
-    if (response.statusCode == 202) {
-      foods[index] = newFood;
+    final response = await _adminService.editFood(index, newFood);
+    // print(response.body);
+    if (response) {
+      // foods[index] = newFood;
       Get.snackbar('Success', 'Food updated successfully',
           snackPosition: SnackPosition.BOTTOM);
       Get.to(() => ManagementFood());
@@ -108,22 +101,21 @@ class AdminController extends GetxController {
       Get.snackbar('Error', 'Failed to update food',
           snackPosition: SnackPosition.BOTTOM);
     }
+    isLoading(false);
   }
 
   void deleteFood(int index) async {
     final token = StorageService().readToken();
-    final food = foods[index];
     final response = await http.delete(
-      Uri.parse('http://localhost:8080/api/recipe/${food.id}'),
+      Uri.parse('http://localhost:8080/api/recipe/${index}'),
       headers: {
         'API-TOKEN': token!,
       },
     );
-
     if (response.statusCode == 200) {
-      foods.removeAt(index);
       Get.snackbar('Success', 'Food deleted successfully',
           snackPosition: SnackPosition.BOTTOM);
+      fetchAllRecipes();
     } else {
       Get.snackbar('Error', 'Failed to delete food',
           snackPosition: SnackPosition.BOTTOM);

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../StorageService.dart';
+import '../../models/resep.dart';
 
 class AdminService {
   static final String baseUrl = "http://localhost:8080/api";
@@ -55,6 +56,38 @@ class AdminService {
     } catch (e) {
       // Handle network error
       print('Error saat logout: $e');
+    }
+  }
+
+  Future<List<Resep>> getListRecipe() async {
+    final url = Uri.parse('$baseUrl');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonData = json.decode(response.body);
+      return jsonData.map((item) => Resep.fromJson(item)).toList();
+    } else {
+      throw Exception('Failed to load recipes');
+    }
+  }
+
+  Future<bool> editFood(int index, Resep newFood) async {
+    final token = StorageService().readToken();
+    final url = Uri.parse('$baseUrl/recipe/${index}');
+    final response = await http.put(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'API-TOKEN': token!,
+      },
+      body: jsonEncode(newFood.toJson()),
+    );
+
+    if (response.statusCode == 202) {
+      bool respon = true;
+      return respon;
+    } else {
+      return false;
     }
   }
 }

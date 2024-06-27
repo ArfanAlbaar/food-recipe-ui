@@ -8,7 +8,6 @@ class RecipeService {
   // final StorageService _storage = StorageService();
   //LIST
   Future<List<dynamic>> getListRecipe() async {
-    // final url = Uri.parse('$baseUrl?category=$category');
     final url = Uri.parse('$baseUrl');
     final response = await http.get(url);
 
