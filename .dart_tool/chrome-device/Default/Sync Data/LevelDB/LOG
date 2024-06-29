@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-2024/06/27-23:05:10.112 427c Reusing MANIFEST C:\Users\Putri\AppData\Local\Temp\flutter_tools.a428739e\flutter_tools_chrome_device.c484ef17\Default\Sync Data\LevelDB/MANIFEST-000001
-2024/06/27-23:05:10.244 427c Recovering log #3
-2024/06/27-23:05:10.260 427c Reusing old log C:\Users\Putri\AppData\Local\Temp\flutter_tools.a428739e\flutter_tools_chrome_device.c484ef17\Default\Sync Data\LevelDB/000003.log 
-=======
-2024/06/28-16:48:22.325 9307 Reusing MANIFEST /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.LS9KTt/flutter_tools_chrome_device.kIcxxP/Default/Sync Data/LevelDB/MANIFEST-000001
-2024/06/28-16:48:22.431 9307 Recovering log #3
-2024/06/28-16:48:22.431 9307 Reusing old log /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.LS9KTt/flutter_tools_chrome_device.kIcxxP/Default/Sync Data/LevelDB/000003.log 
->>>>>>> 6404d54d3a169d7aacaabf48968d1bb58c472f24
+2024/06/29-19:27:55.369 6107 Reusing MANIFEST /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.w5OMQl/flutter_tools_chrome_device.Yz1J0w/Default/Sync Data/LevelDB/MANIFEST-000001
+2024/06/29-19:27:55.411 6107 Recovering log #3
+2024/06/29-19:27:55.413 6107 Reusing old log /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.w5OMQl/flutter_tools_chrome_device.Yz1J0w/Default/Sync Data/LevelDB/000003.log 

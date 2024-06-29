@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodrecipeapp/app/modules/admin/views/member/managementMember_view.dart';
 import 'package:foodrecipeapp/app/modules/admin/views/resep/managementResep_view.dart';
 import 'package:foodrecipeapp/app/modules/admin/views/resepPremium/managementResepPremium_view.dart';
 import 'package:foodrecipeapp/app/modules/admin/views/transaction/transaction_view.dart';
@@ -60,7 +61,7 @@ class AdminView extends GetView<AdminController> {
             AdminButton(
               label: 'Member',
               onPressed: () {
-                // Get.to(() => const DeleteFoodView());
+                Get.to(() => ManagementMemberView());
               },
             ),
             const SizedBox(height: 20),

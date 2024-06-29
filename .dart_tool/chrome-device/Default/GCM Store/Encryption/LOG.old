@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 2024/06/27-23:05:24.905 2aa4 Reusing MANIFEST C:\Users\Putri\AppData\Local\Temp\flutter_tools.a428739e\flutter_tools_chrome_device.c484ef17\Default\GCM Store\Encryption/MANIFEST-000001
 2024/06/27-23:05:24.906 2aa4 Recovering log #3
 2024/06/27-23:05:24.906 2aa4 Reusing old log C:\Users\Putri\AppData\Local\Temp\flutter_tools.a428739e\flutter_tools_chrome_device.c484ef17\Default\GCM Store\Encryption/000003.log 
@@ -7,3 +8,8 @@
 2024/06/28-16:48:42.502 8f03 Recovering log #3
 2024/06/28-16:48:42.502 8f03 Reusing old log /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.LS9KTt/flutter_tools_chrome_device.kIcxxP/Default/GCM Store/Encryption/000003.log 
 >>>>>>> 6404d54d3a169d7aacaabf48968d1bb58c472f24
+=======
+2024/06/29-18:14:52.858 8e03 Reusing MANIFEST /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.3PDh2h/flutter_tools_chrome_device.xjjBbM/Default/GCM Store/Encryption/MANIFEST-000001
+2024/06/29-18:14:52.859 8e03 Recovering log #3
+2024/06/29-18:14:52.859 8e03 Reusing old log /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.3PDh2h/flutter_tools_chrome_device.xjjBbM/Default/GCM Store/Encryption/000003.log 
+>>>>>>> 72c18f14936e2701eafc3ad60c390ad9b0006033

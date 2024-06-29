@@ -333,7 +333,7 @@
     },
     {
       "name": "printing",
-      "rootUri": "file:///C:/Users/Putri/AppData/Local/Pub/Cache/hosted/pub.dev/printing-5.13.0",
+      "rootUri": "file:///C:/Users/Putri/AppData/Local/Pub/Cache/hosted/pub.dev/printing-5.13.1",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -458,7 +458,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-06-29T09:53:10.767647Z",
+  "generated": "2024-06-29T14:28:19.156609Z",
   "generator": "pub",
   "generatorVersion": "3.4.3",
   "flutterRoot": "file:///C:/src/flutter",
