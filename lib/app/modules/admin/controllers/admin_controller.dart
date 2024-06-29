@@ -58,7 +58,7 @@ class AdminController extends GetxController {
     try {
       isLoading(true);
       List<dynamic> result = await recipeService.getListRecipe();
-      recipes.assignAll(result);
+      recipes.assignAll(result.map((item) => Resep.fromJson(item)));
     } catch (e) {
       Get.snackbar('Error', 'Failed to fetch recipes');
     } finally {
@@ -123,9 +123,12 @@ class AdminController extends GetxController {
 
   // * BAGIAN TRANSACTION
   Future<void> fetchTransactions() async {
-    isLoading(true);
     try {
-      transactions.value = await _adminService.fetchTransactions();
+      isLoading(true);
+
+      List<Transaction> result = await _adminService.fetchTransactions();
+
+      transactions.assignAll(result);
     } catch (e) {
       Get.snackbar('Error', 'Failed to load transactions');
     } finally {
@@ -135,16 +138,18 @@ class AdminController extends GetxController {
 
   Future<void> deleteTransaction(int id) async {
     isLoading(true);
-    try {
-      await _adminService.deleteTransaction(id);
-      transactions.removeWhere((transaction) => transaction.id == id);
+
+    final response = await _adminService.deleteTransaction(id);
+    if (response) {
       Get.snackbar('Success', 'Transaction deleted successfully');
-    } catch (e) {
+      isLoading(false);
+      fetchTransactions();
+    } else {
       Get.snackbar('Error', 'Failed to delete transaction');
-    } finally {
       isLoading(false);
     }
   }
+
   // * AKHIR BAGIAN TRANSACTION
 
   // * BAGIAN PREMIUM

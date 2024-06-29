@@ -1,9 +1,11 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../../StorageService.dart';
+import '../../models/premium_list.dart';
 import '../../models/resep.dart';
 import '../../models/transaction.dart';
-import '../../models/premium_list.dart';
 
 class AdminService {
   static final String baseUrl = "http://localhost:8080/api";
@@ -86,21 +88,26 @@ class AdminService {
     final url = Uri.parse('$baseUrl/transaction/list');
     final response = await http.get(
       url,
-      headers: {
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
         'API-TOKEN': token!,
       },
     );
 
     if (response.statusCode == 200) {
-      List<dynamic> jsonResponse = json.decode(response.body);
-      return jsonResponse.map((data) => Transaction.fromJson(data)).toList();
+      // List<dynamic> jsonResponse = json.decode(response.body);
+      // return jsonResponse.map((data) => Transaction.fromJson(data)).toList();
+      List<dynamic> body = json.decode(response.body);
+      List<Transaction> transactions =
+          body.map((dynamic item) => Transaction.fromJson(item)).toList();
+      return transactions;
     } else {
       throw Exception('Failed to load transactions');
     }
   }
 
   // DELETE TRANSACTION
-  Future<void> deleteTransaction(int id) async {
+  Future<bool> deleteTransaction(int id) async {
     final token = _storage.readToken();
     if (token == null) throw Exception('No token found');
 
@@ -112,8 +119,10 @@ class AdminService {
       },
     );
 
-    if (response.statusCode != 200) {
-      throw Exception('Failed to delete transaction');
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 

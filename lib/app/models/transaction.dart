@@ -42,20 +42,20 @@ class Member {
   String password;
   String name;
   String phoneNumber;
-  String token;
-  int tokenExpiredAt;
-  dynamic lastLogin;
-  bool premium;
+  String? token;
+  int? tokenExpiredAt;
+  dynamic? lastLogin;
+  bool? premium;
 
   Member({
     required this.username,
     required this.password,
     required this.name,
     required this.phoneNumber,
-    required this.token,
-    required this.tokenExpiredAt,
-    required this.lastLogin,
-    required this.premium,
+    this.token,
+    this.tokenExpiredAt,
+    this.lastLogin,
+    this.premium,
   });
 
   factory Member.fromJson(Map<String, dynamic> json) => Member(
