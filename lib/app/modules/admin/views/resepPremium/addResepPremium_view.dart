@@ -1,8 +1,10 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../widgets/colors.dart';
+import '../../controllers/admin_controller.dart';
 
 class AddResepPremiumView extends StatefulWidget {
   const AddResepPremiumView({super.key});
@@ -13,6 +15,8 @@ class AddResepPremiumView extends StatefulWidget {
 
 class _ResepPremiumViewState extends State<AddResepPremiumView> {
   String? _fileName;
+  PlatformFile? _pickedFile;
+  final TextEditingController _nameController = TextEditingController();
 
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -20,7 +24,26 @@ class _ResepPremiumViewState extends State<AddResepPremiumView> {
     if (result != null) {
       setState(() {
         _fileName = result.files.single.name;
+        _pickedFile = result.files.single;
       });
+    }
+  }
+
+  void _submit() async {
+    if (_nameController.text.isEmpty || _pickedFile == null) {
+      Get.snackbar('Error', 'Please provide a name and pick a file');
+      return;
+    }
+
+    try {
+      await Get.find<AdminController>()
+          .addPremiumWithPdf(_nameController.text, _pickedFile!);
+      Get.back(); // Kembali ke halaman sebelumnya setelah berhasil
+    } catch (error) {
+      Get.snackbar('Error', error.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
     }
   }
 
@@ -39,6 +62,14 @@ class _ResepPremiumViewState extends State<AddResepPremiumView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(
+                labelText: 'Nama Premium',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
@@ -70,9 +101,7 @@ class _ResepPremiumViewState extends State<AddResepPremiumView> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                // Implement submit action here
-              },
+              onPressed: _submit,
               child: Text(
                 'Tambah',
                 style: GoogleFonts.poppins(

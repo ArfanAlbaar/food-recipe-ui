@@ -5,12 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../widgets/colors.dart';
 
 class TransactionView extends GetView<AdminController> {
-  // final AdminController controller = Get.put(AdminController());
+  final AdminController controller = Get.put(AdminController());
 
   TransactionView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    controller.fetchTransactions();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
