@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../widgets/colors.dart';
 
 class TransactionView extends GetView<AdminController> {
+  // final AdminController controller = Get.put(AdminController());
+
   TransactionView({Key? key}) : super(key: key);
 
   @override

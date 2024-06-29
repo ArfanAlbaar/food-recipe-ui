@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 
 import '../../StorageService.dart';
@@ -143,6 +143,58 @@ class AdminService {
       return jsonResponse.map((data) => PremiumList.fromJson(data)).toList();
     } else {
       throw Exception('Failed to load premiums');
+    }
+  }
+
+  // GET PREMIUM BY ID
+  Future<PremiumList> getPremiumById(int id) async {
+    final token = _storage.readToken();
+    final url = Uri.parse('$baseUrl/premium/$id');
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'API-TOKEN': token!,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return PremiumList.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load premium');
+    }
+  }
+
+  Future<bool> editPremium(int id, String premiumName) async {
+    final token = _storage.readToken();
+    final url = Uri.parse('$baseUrl/premium/$id');
+    final response = await http.put(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'API-TOKEN': token!,
+      },
+      body: jsonEncode({'premiumName': premiumName}),
+    );
+
+    return response.statusCode == 200;
+  }
+
+  Future<bool> addPremiumWithPdf(String premiumName, PlatformFile file) async {
+    final token = _storage.readToken();
+    final request = http.MultipartRequest('POST', Uri.parse('$baseUrl/premium'))
+      ..headers['API-TOKEN'] = token!
+      ..fields['premiumName'] = premiumName
+      ..files.add(await http.MultipartFile.fromPath('file', file.path!));
+
+    final response = await request.send();
+    final responseBody = await http.Response.fromStream(response);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      print('Failed to add premium: ${responseBody.body}');
+      return false;
     }
   }
 

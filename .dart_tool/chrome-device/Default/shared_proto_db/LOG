@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 2024/06/27-23:05:10.636 33d4 Reusing MANIFEST C:\Users\Putri\AppData\Local\Temp\flutter_tools.a428739e\flutter_tools_chrome_device.c484ef17\Default\shared_proto_db/MANIFEST-000001
 2024/06/27-23:05:10.636 33d4 Recovering log #3
 2024/06/27-23:05:10.637 33d4 Reusing old log C:\Users\Putri\AppData\Local\Temp\flutter_tools.a428739e\flutter_tools_chrome_device.c484ef17\Default\shared_proto_db/000003.log 
+=======
+2024/06/28-16:48:24.466 9307 Reusing MANIFEST /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.LS9KTt/flutter_tools_chrome_device.kIcxxP/Default/shared_proto_db/MANIFEST-000001
+2024/06/28-16:48:24.467 9307 Recovering log #3
+2024/06/28-16:48:24.469 9307 Reusing old log /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.LS9KTt/flutter_tools_chrome_device.kIcxxP/Default/shared_proto_db/000003.log 
+>>>>>>> 6404d54d3a169d7aacaabf48968d1bb58c472f24

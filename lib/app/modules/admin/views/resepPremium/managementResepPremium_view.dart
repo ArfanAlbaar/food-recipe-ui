@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodrecipeapp/app/modules/admin/views/resepPremium/addResepPremium_view.dart';
+import 'package:foodrecipeapp/app/modules/admin/views/resepPremium/editResepPremium.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -78,7 +79,9 @@ class ManagementResepPremium extends GetView<AdminController> {
                                 color: Colors.blue[400],
                                 onPressed: () {
                                   // Navigate to edit page with premium details
-                                  // Get.to(EditPremium(premium: premium, index: premium.id!));
+                                  Get.to(EditPremiumView(
+                                    id: premium.id,
+                                  ));
                                 },
                                 icon: const Icon(Iconsax.edit_25),
                               ),

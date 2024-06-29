@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:foodrecipeapp/app/StorageService.dart';
 import 'package:foodrecipeapp/app/models/premium_list.dart';
 import 'package:foodrecipeapp/app/models/resep.dart';
@@ -165,6 +167,56 @@ class AdminController extends GetxController {
     }
   }
 
+  Future<bool> editPremium(int id, String premiumName) async {
+    isLoading(true);
+    try {
+      final success = await _adminService.editPremium(id, premiumName);
+      if (success) {
+        Get.snackbar('Success', 'Premium name updated successfully',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green,
+            colorText: Colors.white);
+      } else {
+        Get.snackbar('Error', 'Failed to update premium name',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+      }
+      return success;
+    } catch (e) {
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return false;
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> addPremiumWithPdf(String premiumName, PlatformFile file) async {
+    isLoading(true);
+    try {
+      final success = await _adminService.addPremiumWithPdf(premiumName, file);
+      if (success) {
+        Get.snackbar('Success', 'Premium added successfully',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green,
+            colorText: Colors.white);
+        fetchAllPremiums(); // Refresh the list
+      } else {
+        throw Exception('Failed to add premium');
+      }
+    } catch (e) {
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    } finally {
+      isLoading(false);
+    }
+  }
+
   void deletePremium(int index) async {
     final response = await _adminService.deletePremium(index);
     if (response) {
@@ -174,6 +226,15 @@ class AdminController extends GetxController {
     } else {
       Get.snackbar('Error', 'Failed to delete premium recipe',
           snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  Future<PremiumList> getPremiumById(int id) async {
+    try {
+      final premium = await _adminService.getPremiumById(id);
+      return premium;
+    } catch (e) {
+      throw Exception('Failed to load premium');
     }
   }
   // * AKHIR BAGIAN PREMIUM
