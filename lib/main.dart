@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodrecipeapp/app/modules/admin/views/member/managementMember_view.dart';
 import 'package:foodrecipeapp/app/modules/home/views/splash_view.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';

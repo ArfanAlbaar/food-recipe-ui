@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-2024/06/27-23:05:10.144 3058 Reusing MANIFEST C:\Users\Putri\AppData\Local\Temp\flutter_tools.a428739e\flutter_tools_chrome_device.c484ef17\Default\Site Characteristics Database/MANIFEST-000001
-2024/06/27-23:05:10.244 3058 Recovering log #3
-2024/06/27-23:05:10.260 3058 Reusing old log C:\Users\Putri\AppData\Local\Temp\flutter_tools.a428739e\flutter_tools_chrome_device.c484ef17\Default\Site Characteristics Database/000003.log 
-=======
-2024/06/28-16:48:22.440 6a03 Reusing MANIFEST /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.LS9KTt/flutter_tools_chrome_device.kIcxxP/Default/Site Characteristics Database/MANIFEST-000001
-2024/06/28-16:48:22.440 6a03 Recovering log #3
-2024/06/28-16:48:22.441 6a03 Reusing old log /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.LS9KTt/flutter_tools_chrome_device.kIcxxP/Default/Site Characteristics Database/000003.log 
->>>>>>> 6404d54d3a169d7aacaabf48968d1bb58c472f24
+2024/06/29-19:27:55.464 6503 Reusing MANIFEST /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.w5OMQl/flutter_tools_chrome_device.Yz1J0w/Default/Site Characteristics Database/MANIFEST-000001
+2024/06/29-19:27:55.465 6503 Recovering log #3
+2024/06/29-19:27:55.466 6503 Reusing old log /private/var/folders/9f/214_zg9s39q8y1nvjfmpb7r00000gp/T/flutter_tools.w5OMQl/flutter_tools_chrome_device.Yz1J0w/Default/Site Characteristics Database/000003.log 

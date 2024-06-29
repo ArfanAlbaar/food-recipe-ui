@@ -9,6 +9,7 @@ import 'package:foodrecipeapp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../models/listMember.dart';
 import '../../../models/transaction.dart';
 import '../../home/recipe_service.dart';
 import '../admin_service.dart';
@@ -18,6 +19,7 @@ class AdminController extends GetxController {
   var recipes = <Resep>[].obs; // Observable list of Resep
   var transactions = <Transaction>[].obs;
   var premiums = <PremiumList>[].obs;
+  var members = <ListMember>[].obs;
 
   RxBool isFavorite = false.obs;
   var isLoading = false.obs;
@@ -238,4 +240,49 @@ class AdminController extends GetxController {
     }
   }
   // * AKHIR BAGIAN PREMIUM
+
+  // * BAGIAN MEMBER
+  // * BAGIAN MEMBER
+  Future<void> fetchAllMembers() async {
+    try {
+      isLoading(true);
+      List<ListMember> result = await _adminService.getListMembers();
+      members.assignAll(result);
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to fetch members');
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> updateMember(String username, bool premium) async {
+    final member =
+        members.firstWhere((element) => element.username == username);
+    member.premium = premium;
+    isLoading(true);
+    final response = await _adminService.updateMember(member);
+    if (response) {
+      Get.snackbar('Success', 'Member updated successfully',
+          snackPosition: SnackPosition.BOTTOM);
+      fetchAllMembers();
+    } else {
+      Get.snackbar('Error', 'Failed to update member',
+          snackPosition: SnackPosition.BOTTOM);
+    }
+    isLoading(false);
+  }
+
+  void deleteMember(String username) async {
+    isLoading(true);
+    final response = await _adminService.deleteMember(username);
+    if (response) {
+      Get.snackbar('Success', 'Member deleted successfully',
+          snackPosition: SnackPosition.BOTTOM);
+      fetchAllMembers();
+    } else {
+      Get.snackbar('Error', 'Failed to delete member',
+          snackPosition: SnackPosition.BOTTOM);
+    }
+    isLoading(false);
+  }
 }

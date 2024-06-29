@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 
 import '../../StorageService.dart';
+import '../../models/listMember.dart';
 import '../../models/premium_list.dart';
 import '../../models/resep.dart';
 import '../../models/transaction.dart';
@@ -213,5 +214,55 @@ class AdminService {
     } else {
       return false;
     }
+  }
+
+  // Member List
+  Future<List<ListMember>> getListMembers() async {
+    final token = _storage.readToken();
+    final url = Uri.parse('$baseUrl/member/list');
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'API-TOKEN': token!,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => ListMember.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to load members');
+    }
+  }
+
+  // Update Member
+  Future<bool> updateMember(ListMember member) async {
+    final token = _storage.readToken();
+    final url = Uri.parse('$baseUrl/member/${member.username}');
+    final response = await http.put(
+      url,
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'API-TOKEN': token!,
+      },
+      body: jsonEncode(member.toJson()),
+    );
+
+    return response.statusCode == 200;
+  }
+
+  // Delete Member
+  Future<bool> deleteMember(String username) async {
+    final token = _storage.readToken();
+    final url = Uri.parse('$baseUrl/member/$username');
+    final response = await http.delete(
+      url,
+      headers: {
+        'API-TOKEN': token!,
+      },
+    );
+
+    return response.statusCode == 200;
   }
 }
