@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:foodrecipeapp/app/StorageService.dart';
 import 'package:foodrecipeapp/app/models/premium_list.dart';
 import 'package:foodrecipeapp/app/models/resep.dart';
+import 'package:foodrecipeapp/app/modules/admin/views/resepPremium/managementResepPremium_view.dart';
 import 'package:foodrecipeapp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../models/transaction.dart';
+import '../../../widgets/colors.dart';
 import '../../home/recipe_service.dart';
 import '../admin_service.dart';
 import '../views/resep/managementResep_view.dart';
@@ -174,15 +176,18 @@ class AdminController extends GetxController {
       if (success) {
         Get.snackbar('Success', 'Premium name updated successfully',
             snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.green,
+            backgroundColor: hijauSage,
             colorText: Colors.white);
+        isLoading(false);
+        Get.to(() => ManagementResepPremium());
+        return success;
       } else {
         Get.snackbar('Error', 'Failed to update premium name',
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.red,
             colorText: Colors.white);
+        return false;
       }
-      return success;
     } catch (e) {
       Get.snackbar('Error', e.toString(),
           snackPosition: SnackPosition.BOTTOM,
@@ -194,26 +199,20 @@ class AdminController extends GetxController {
     }
   }
 
-  Future<void> addPremiumWithPdf(String premiumName, PlatformFile file) async {
-    isLoading(true);
+  Future<void> addPremiumWithPdf(PlatformFile file) async {
     try {
-      final success = await _adminService.addPremiumWithPdf(premiumName, file);
-      if (success) {
-        Get.snackbar('Success', 'Premium added successfully',
+      isLoading(true);
+      final response = await _adminService.uploadFile(file);
+      if (response) {
+        Get.snackbar('Success', "Success Upload File",
             snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.green,
+            backgroundColor: hijauSage,
             colorText: Colors.white);
-        fetchAllPremiums(); // Refresh the list
-      } else {
-        throw Exception('Failed to add premium');
+        isLoading(false);
+        Get.to(() => ManagementResepPremium());
       }
     } catch (e) {
-      Get.snackbar('Error', e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
-    } finally {
-      isLoading(false);
+      throw e;
     }
   }
 

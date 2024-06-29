@@ -248,6 +248,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "mime",
+      "rootUri": "file:///C:/Users/Putri/AppData/Local/Pub/Cache/hosted/pub.dev/mime-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "path",
       "rootUri": "file:///C:/Users/Putri/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.9.0",
       "packageUri": "lib/",
@@ -452,7 +458,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-06-27T16:02:00.896617Z",
+  "generated": "2024-06-29T09:53:10.767647Z",
   "generator": "pub",
   "generatorVersion": "3.4.3",
   "flutterRoot": "file:///C:/src/flutter",
