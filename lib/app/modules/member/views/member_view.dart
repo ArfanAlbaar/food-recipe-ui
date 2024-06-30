@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodrecipeapp/app/modules/member/controllers/member_controller.dart';
+import 'package:foodrecipeapp/app/widgets/colors.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -38,7 +39,7 @@ class MemberView extends GetView<MemberController> {
           style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.teal,
+        backgroundColor: hijauSage,
         actions: checkMember
             ? [
                 IconButton(

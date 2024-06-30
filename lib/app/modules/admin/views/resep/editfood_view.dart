@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodrecipeapp/app/modules/admin/views/resep/managementResep_view.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../models/resep.dart';
@@ -23,7 +24,7 @@ class EditFood extends StatelessWidget {
     'BREAKFAST',
   ];
   late String selectedCategory;
-  bool isFavorite;
+  var isFavorite = false.obs;
 
   EditFood({required this.food, required this.index, Key? key})
       : nameController = TextEditingController(text: food.recipeName),
@@ -31,8 +32,9 @@ class EditFood extends StatelessWidget {
         langkahController = TextEditingController(text: food.instructions),
         imgLinkController = TextEditingController(text: food.imgLink),
         selectedCategory = food.category,
-        isFavorite = food.favorite,
-        super(key: key);
+        super(key: key) {
+    isFavorite.value = food.favorite;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +55,18 @@ class EditFood extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              AdminTextField(controller: nameController, label: 'Nama Resep'),
-              AdminTextField(controller: bahanController, label: 'Bahan'),
+              AdminTextField(
+                controller: nameController,
+                label: 'Nama Resep',
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+              ),
+              AdminTextField(
+                controller: bahanController,
+                label: 'Bahan',
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+              ),
               AdminTextField(
                   controller: langkahController, label: 'Langkah Memasak'),
               AdminTextField(
@@ -83,24 +95,24 @@ class EditFood extends StatelessWidget {
               const SizedBox(height: 16),
               Obx(() => SwitchListTile(
                     title: Text('Favorite'),
-                    value: controller.isFavorite.value,
+                    value: isFavorite.value,
                     onChanged: (bool value) {
-                      controller.isFavorite.value = value;
+                      isFavorite.value = value;
                     },
                     activeColor: Colors.green,
                   )),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   Resep updatedFood = Resep(
                     recipeName: nameController.text,
                     ingredients: bahanController.text,
                     instructions: langkahController.text,
                     category: selectedCategory,
-                    favorite: isFavorite,
+                    favorite: isFavorite.value,
                     imgLink: imgLinkController.text,
                   );
-                  controller.editFood(index, updatedFood);
+                  await controller.editFood(index, updatedFood);
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: hijauSage, fixedSize: Size(Get.width, 40)),

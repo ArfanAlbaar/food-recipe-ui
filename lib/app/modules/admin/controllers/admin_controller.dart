@@ -35,18 +35,50 @@ class AdminController extends GetxController {
     final token = _storage.readToken();
     isLoggedIn(token != null);
   }
+  // ! BAGIAN ADMIN HANDLING
+  // Future<void> loginAdmin(String username, String password) async {
+  //   isLoading(true);
+  //   final token = await AdminService.loginAdmin(username, password);
+  //   if (token != null) {
+  //     _storage.writeToken(token);
+  //     isLoggedIn(true);
+  //     Get.offAllNamed(Routes.ADMIN);
+  //   } else {
+  //     Get.snackbar('Error', 'Login gagal');
+  //   }
+  //   isLoading(false);
+  // }
 
   Future<void> loginAdmin(String username, String password) async {
-    isLoading(true);
-    final token = await AdminService.loginAdmin(username, password);
-    if (token != null) {
-      _storage.writeToken(token);
-      isLoggedIn(true);
-      Get.offAllNamed(Routes.ADMIN);
-    } else {
-      Get.snackbar('Error', 'Login gagal');
+    if (username.isEmpty) {
+      Get.snackbar('Error', 'Username tidak boleh kosong');
+      return;
     }
-    isLoading(false);
+    if (password.isEmpty) {
+      Get.snackbar('Error', 'Password tidak boleh kosong');
+      return;
+    }
+
+    isLoading(true);
+
+    try {
+      final token = await AdminService.loginAdmin(username, password);
+
+      if (token != null) {
+        _storage.writeToken(token);
+        isLoggedIn(true);
+        Get.offAllNamed(Routes.ADMIN);
+        Get.snackbar('Success', 'Login berhasil');
+      } else {
+        // Assume the error is incorrect password
+        Get.snackbar('Error', 'Password salah');
+      }
+    } catch (e) {
+      // Assume the error is incorrect username
+      Get.snackbar('Error', 'Username salah');
+    } finally {
+      isLoading(false);
+    }
   }
 
   Future<void> logoutAdmin() async {
@@ -56,8 +88,11 @@ class AdminController extends GetxController {
     isLoggedIn(false);
     isLoading(false);
     Get.offAllNamed(Routes.HOME);
+    Get.snackbar("Success", "Logout Berhasil");
   }
+  // ! AKHIR BAGIAN ADMIN HANDLING
 
+  // ! BAGIAN RESEP
   void fetchAllRecipes() async {
     try {
       isLoading(true);
@@ -99,7 +134,8 @@ class AdminController extends GetxController {
     if (response) {
       Get.snackbar('Success', 'Food updated successfully',
           snackPosition: SnackPosition.BOTTOM);
-      Get.to(() => ManagementResep());
+      // Get.to(() => ManagementResep());
+      Get.off(() => ManagementResep());
     } else {
       Get.snackbar('Error', 'Failed to update food',
           snackPosition: SnackPosition.BOTTOM);
@@ -124,6 +160,7 @@ class AdminController extends GetxController {
           snackPosition: SnackPosition.BOTTOM);
     }
   }
+  // ! AKHIR BAGIAN RESEP
 
   // * BAGIAN TRANSACTION
   Future<void> fetchTransactions() async {

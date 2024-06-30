@@ -6,8 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../widgets/colors.dart';
 
 class TransactionView extends GetView<AdminController> {
-  // final AdminController controller = Get.put(AdminController());
-
   TransactionView({Key? key}) : super(key: key);
 
   @override
@@ -31,38 +29,93 @@ class TransactionView extends GetView<AdminController> {
           if (controller.isLoading.value) {
             return Center(child: CircularProgressIndicator());
           } else if (controller.transactions.isEmpty) {
-            return Center(child: Text("No transactions found"));
+            return Center(
+              child: Text(
+                "No transactions found",
+                style: GoogleFonts.poppins(fontSize: 16),
+              ),
+            );
           } else {
             return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
-                columns: const [
-                  DataColumn(label: Text('ID')),
-                  DataColumn(label: Text('Amount')),
-                  DataColumn(label: Text('Timestamp')),
-                  DataColumn(label: Text('Username')),
-                  DataColumn(label: Text('Actions')),
+                headingRowColor:
+                    MaterialStateColor.resolveWith((states) => hijauSage),
+                columnSpacing: 20.0,
+                columns: [
+                  DataColumn(
+                    label: Text(
+                      'ID',
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Amount',
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Timestamp',
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Username',
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Actions',
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ],
                 rows: List<DataRow>.generate(
                   controller.transactions.length,
                   (index) {
                     final transaction = controller.transactions[index];
-                    return DataRow(cells: [
-                      DataCell(Text((index + 1).toString())),
-                      DataCell(Text(transaction.amount.toString())),
-                      DataCell(Text(transaction.timestamp.toString())),
-                      DataCell(Text(transaction.member.username)),
-                      DataCell(Row(
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red),
-                            onPressed: () {
-                              controller.deleteTransaction(transaction.id);
-                            },
-                          ),
-                        ],
-                      )),
-                    ]);
+                    return DataRow(
+                      color: MaterialStateProperty.resolveWith<Color?>(
+                        (Set<MaterialState> states) {
+                          if (index % 2 == 0) {
+                            return Colors.grey.withOpacity(0.1);
+                          }
+                          return null;
+                        },
+                      ),
+                      cells: [
+                        DataCell(Text(
+                          (index + 1).toString(),
+                          style: GoogleFonts.poppins(),
+                        )),
+                        DataCell(Text(
+                          transaction.amount.toString(),
+                          style: GoogleFonts.poppins(),
+                        )),
+                        DataCell(Text(
+                          transaction.timestamp.toString(),
+                          style: GoogleFonts.poppins(),
+                        )),
+                        DataCell(Text(
+                          transaction.member.username,
+                          style: GoogleFonts.poppins(),
+                        )),
+                        DataCell(Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.delete, color: Colors.red),
+                              onPressed: () {
+                                controller.deleteTransaction(transaction.id);
+                              },
+                            ),
+                          ],
+                        )),
+                      ],
+                    );
                   },
                 ),
               ),

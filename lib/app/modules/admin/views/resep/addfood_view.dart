@@ -51,7 +51,9 @@ class AddFood extends StatelessWidget {
                   },
                 ),
                 AdminTextField(
+                  keyboardType: TextInputType.multiline,
                   controller: bahanController,
+                  maxLines: null,
                   label: 'Bahan',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -62,6 +64,8 @@ class AddFood extends StatelessWidget {
                 ),
                 AdminTextField(
                   controller: langkahController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
                   label: 'Langkah Memasak',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -147,13 +151,14 @@ class AdminTextField extends StatelessWidget {
   final String? label;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
-
+  final int? maxLines;
   const AdminTextField({
     Key? key,
     this.controller,
     this.label,
     this.keyboardType = TextInputType.text,
     this.validator,
+    this.maxLines = 1,
   }) : super(key: key);
 
   @override
@@ -162,6 +167,7 @@ class AdminTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         autocorrect: false,
+        maxLines: maxLines,
         controller: controller,
         keyboardType: keyboardType,
         decoration: InputDecoration(

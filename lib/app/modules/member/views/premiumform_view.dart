@@ -147,21 +147,23 @@ class PremiumformView extends GetView<MemberController> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            String username = usernameController.text.trim();
-                            String name = nameController.text.trim();
-                            String password = passwordController.text.trim();
-                            String phoneNumber =
-                                phoneNumberController.text.trim();
-                            controller.registerMember(
-                                username, name, password, phoneNumber);
-                            Get.snackbar(
-                              "Berhasil",
-                              "Data anda berhasil disimpan",
-                              backgroundColor: bgColor,
-                              colorText: hijauSage,
-                            );
-                            Get.offAllNamed(
-                                Routes.LOGINMEMBER); //ARAHKAN KE PEMBAYARAN
+                            if (formKey.currentState!.validate()) {
+                              String username = usernameController.text.trim();
+                              String name = nameController.text.trim();
+                              String password = passwordController.text.trim();
+                              String phoneNumber =
+                                  phoneNumberController.text.trim();
+                              controller.registerMember(
+                                  username, name, password, phoneNumber);
+                              Get.snackbar(
+                                "Berhasil",
+                                "Data anda berhasil disimpan",
+                                backgroundColor: bgColor,
+                                colorText: hijauSage,
+                              );
+                              Get.offAllNamed(Routes.LOGINMEMBER);
+                            }
+                            //ARAHKAN KE PEMBAYARAN
                             // if (formKey.currentState!.validate()) {
                             //   usernameController.clear();
                             //   nameController.clear();

@@ -31,6 +31,9 @@ class AdminView extends GetView<AdminController> {
         ),
         centerTitle: true,
         backgroundColor: hijauSage,
+        leading: IconButton(
+            onPressed: () => Get.offAllNamed(Routes.HOME),
+            icon: Icon(Iconsax.home5)),
         actions: [
           IconButton(
               onPressed: () {

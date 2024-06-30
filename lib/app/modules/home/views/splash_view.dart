@@ -51,9 +51,6 @@ class SplashScreen extends StatelessWidget {
               children: [
                 const Spacer(),
                 TableAnggota(),
-                SizedBox(
-                  height: 10,
-                ),
                 Text(
                   "Memasak &\nMakanan Lezat dengan Mudah",
                   style: GoogleFonts.poppins(
@@ -71,7 +68,7 @@ class SplashScreen extends StatelessWidget {
                     fontSize: 13,
                   ),
                 ),
-                const SizedBox(height: 40),
+                Spacer(),
                 GestureDetector(
                   onTap: () {
                     Get.offAllNamed(Routes.HOME);
@@ -93,9 +90,7 @@ class SplashScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
+                Spacer()
               ],
             ),
           )
