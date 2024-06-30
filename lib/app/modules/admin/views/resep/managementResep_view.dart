@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodrecipeapp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -79,6 +80,15 @@ class ManagementResep extends GetView<AdminController> {
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                 ),
+                              ),
+                              const SizedBox(width: 10),
+                              Icon(
+                                food.favorite ?? true
+                                    ? Icons.check_circle
+                                    : Icons.cancel,
+                                color: food.favorite ?? true
+                                    ? Colors.green
+                                    : Colors.red,
                               ),
                             ],
                           ),

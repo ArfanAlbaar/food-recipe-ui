@@ -1,7 +1,0 @@
-version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
-options: "c331e5a4ad76456a111566d533b6a72086063dcb3f3b60b85582ac2842a16d91"
-build_start_time: [1719480283, 717307090]
-build_end_time: [1719480283, 779855966]
-inputs:
-  "/Users/zxura/.pub-cache/hosted/pub.dev/printing-5.12.0/macos/Classes/PrintJob.swift": !private [1718298694, 139103889]
-  "/Users/zxura/.pub-cache/hosted/pub.dev/printing-5.12.0/macos/Classes/PrintingPlugin.swift": !private [1718298694, 137035608]

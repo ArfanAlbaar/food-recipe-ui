@@ -147,26 +147,33 @@ class PremiumformView extends GetView<MemberController> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            String username = usernameController.text.trim();
-                            String name = nameController.text.trim();
-                            String password = passwordController.text.trim();
-                            String phoneNumber =
-                                phoneNumberController.text.trim();
-                            controller.registerMember(
-                                username, name, password, phoneNumber);
                             if (formKey.currentState!.validate()) {
+                              String username = usernameController.text.trim();
+                              String name = nameController.text.trim();
+                              String password = passwordController.text.trim();
+                              String phoneNumber =
+                                  phoneNumberController.text.trim();
+                              controller.registerMember(
+                                  username, name, password, phoneNumber);
+                              Get.snackbar(
+                                "Berhasil",
+                                "Data anda berhasil disimpan",
+                                backgroundColor: bgColor,
+                                colorText: hijauSage,
+                              );
                               usernameController.clear();
                               nameController.clear();
                               passwordController.clear();
                               phoneNumberController.clear();
+                              Get.offNamed(Routes.LOGINMEMBER);
                             }
-                            Get.snackbar(
-                              "Berhasil",
-                              "Data anda berhasil disimpan",
-                              backgroundColor: bgColor,
-                              colorText: hijauSage,
-                            );
-                            Get.offNamed(Routes.LOGINMEMBER);
+                            //ARAHKAN KE PEMBAYARAN
+                            // if (formKey.currentState!.validate()) {
+                            //   usernameController.clear();
+                            //   nameController.clear();
+                            //   passwordController.clear();
+                            //   phoneNumberController.clear();
+                            // }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: hijauSage,

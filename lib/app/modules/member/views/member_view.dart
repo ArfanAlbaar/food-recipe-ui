@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../../widgets/colors.dart';
 import '../../admin/controllers/admin_controller.dart';
 import 'card_payment.dart';
 
@@ -46,7 +47,7 @@ class MemberView extends GetView<MemberController> {
               style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
-            backgroundColor: Colors.teal,
+            backgroundColor: hijauSage,
           ),
           body: Center(child: CircularProgressIndicator()),
         );
@@ -58,7 +59,7 @@ class MemberView extends GetView<MemberController> {
               style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
-            backgroundColor: Colors.teal,
+            backgroundColor: hijauSage,
             actions: checkMember
                 ? [
                     IconButton(

@@ -99,7 +99,7 @@
     },
     {
       "name": "file_picker",
-      "rootUri": "file:///C:/Users/Putri/AppData/Local/Pub/Cache/hosted/pub.dev/file_picker-7.1.0+1",
+      "rootUri": "file:///C:/Users/Putri/AppData/Local/Pub/Cache/hosted/pub.dev/file_picker-8.0.5",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -159,13 +159,13 @@
     },
     {
       "name": "get_storage",
-      "rootUri": "file:///C:/Users/Putri/AppData/Local/Pub/Cache/hosted/pub.dev/get_storage-2.0.3",
+      "rootUri": "file:///C:/Users/Putri/AppData/Local/Pub/Cache/hosted/pub.dev/get_storage-2.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.16"
     },
     {
       "name": "google_fonts",
-      "rootUri": "file:///C:/Users/Putri/AppData/Local/Pub/Cache/hosted/pub.dev/google_fonts-6.1.0",
+      "rootUri": "file:///C:/Users/Putri/AppData/Local/Pub/Cache/hosted/pub.dev/google_fonts-6.2.1",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
@@ -458,7 +458,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-06-29T14:28:19.156609Z",
+  "generated": "2024-06-30T08:29:24.711623Z",
   "generator": "pub",
   "generatorVersion": "3.4.3",
   "flutterRoot": "file:///C:/src/flutter",
