@@ -75,6 +75,14 @@ class MemberView extends GetView<MemberController> {
             child: Column(
               children: [
                 const CardPaymentItems(), // Add CardItems widget here
+                const SizedBox(height: 20),
+                Obx(() {
+                  if (controller.isDownloading.value) {
+                    return CircularProgressIndicator();
+                  } else {
+                    return Text(controller.status.value);
+                  }
+                }),
                 controller.premiums.isEmpty
                     ? Center(child: Text('No premium recipes found'))
                     : Expanded(
@@ -85,7 +93,7 @@ class MemberView extends GetView<MemberController> {
                             return MemberButton(
                               label: recipe.premiumName,
                               onPressed: () {
-                                // Implement the functionality for each recipe button
+                                controller.downloadByMember(recipe.id);
                               },
                             );
                           },

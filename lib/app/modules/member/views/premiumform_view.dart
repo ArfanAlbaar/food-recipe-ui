@@ -167,13 +167,6 @@ class PremiumformView extends GetView<MemberController> {
                               phoneNumberController.clear();
                               Get.offNamed(Routes.LOGINMEMBER);
                             }
-                            //ARAHKAN KE PEMBAYARAN
-                            // if (formKey.currentState!.validate()) {
-                            //   usernameController.clear();
-                            //   nameController.clear();
-                            //   passwordController.clear();
-                            //   phoneNumberController.clear();
-                            // }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: hijauSage,

@@ -1,3 +1,5 @@
+import 'dart:html' as html; // for web
+
 import 'package:foodrecipeapp/app/models/premium_list.dart';
 import 'package:foodrecipeapp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
@@ -87,6 +89,70 @@ class MemberController extends GetxController {
     }
   }
 
+  var isDownloading = false.obs;
+  var status = ''.obs;
+
+  Future<void> downloadByMember(int premiumId) async {
+    isDownloading.value = true;
+    status.value = 'Downloading...';
+    try {
+      final response = await _memberService.downloadPremiumByMember(premiumId);
+      final bytes = response.bodyBytes;
+      // Determine file name and extension
+      // Determine file name and extension from Content-Disposition header
+      // Determine file name and extension from Content-Disposition header
+      String fileName = 'file'; // Default file name
+      String extension = '.txt'; // Default extension for unknown types
+
+      // Extract filename and extension if available from response headers
+      final headerDisposition = response.headers['content-disposition'];
+      if (headerDisposition != null &&
+          headerDisposition.contains('filename=')) {
+        final startIdx =
+            headerDisposition.indexOf('filename=') + 'filename='.length;
+        final endIdx = headerDisposition.indexOf(';', startIdx);
+        fileName =
+            headerDisposition.substring(startIdx, endIdx != -1 ? endIdx : null);
+
+        // Replace any double quotes in the filename
+        fileName = fileName.replaceAll('"', '');
+
+        if (fileName.isNotEmpty) {
+          final dotIndex = fileName.lastIndexOf('.');
+          if (dotIndex != -1) {
+            extension = fileName.substring(dotIndex);
+            fileName = fileName.substring(0, dotIndex);
+          }
+        }
+      }
+
+      // For web: Create a blob and trigger download
+      final blob = html.Blob([bytes], 'application/octet-stream');
+      final url = html.Url.createObjectUrlFromBlob(blob);
+      final anchor = html.AnchorElement(href: url)
+        ..setAttribute('download', '$fileName$extension')
+        ..click();
+
+      html.Url.revokeObjectUrl(url);
+      isDownloading.value = false;
+      status.value = '';
+
+      Get.snackbar('Success', 'File downloaded successfully');
+    } catch (e) {
+      isDownloading.value = false;
+      status.value = 'Failed to download file. Please try again later.';
+      Get.snackbar('Error', 'Failed to download file: $e');
+    }
+  }
+
+  void showNotification(String message) {
+    // Implement platform-specific notification here
+    // Example: Using platform channels for showing notifications on Android/iOS
+  }
+
   final count = 0.obs;
   void increment() => count.value++;
+
+  // isDownloading.value = false;
+  //     status.value = 'Failed to download file, Try Again later';
 }
