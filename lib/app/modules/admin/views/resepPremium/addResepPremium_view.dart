@@ -16,7 +16,6 @@ class AddResepPremiumView extends StatefulWidget {
 class _ResepPremiumViewState extends State<AddResepPremiumView> {
   String? _fileName;
   PlatformFile? _pickedFile;
-  final TextEditingController _nameController = TextEditingController();
 
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -30,15 +29,14 @@ class _ResepPremiumViewState extends State<AddResepPremiumView> {
   }
 
   void _submit() async {
-    if (_nameController.text.isEmpty || _pickedFile == null) {
-      Get.snackbar('Error', 'Please provide a name and pick a file');
+    if (_pickedFile == null) {
+      Get.snackbar('Error', 'Please pick a file');
       return;
     }
 
     try {
-      await Get.find<AdminController>()
-          .addPremiumWithPdf(_nameController.text, _pickedFile!);
-      Get.back(); // Kembali ke halaman sebelumnya setelah berhasil
+      await Get.find<AdminController>().addPremiumWithPdf(_pickedFile!);
+      // Get.back(); // Kembali ke halaman sebelumnya setelah berhasil
     } catch (error) {
       Get.snackbar('Error', error.toString(),
           snackPosition: SnackPosition.BOTTOM,
@@ -62,13 +60,6 @@ class _ResepPremiumViewState extends State<AddResepPremiumView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: 'Nama Premium',
-                border: OutlineInputBorder(),
-              ),
-            ),
             SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(16.0),

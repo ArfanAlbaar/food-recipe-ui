@@ -236,6 +236,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "mime",
+      "rootUri": "file:///Users/zxura/.pub-cache/hosted/pub.dev/mime-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "path",
       "rootUri": "file:///Users/zxura/.pub-cache/hosted/pub.dev/path-1.8.3",
       "packageUri": "lib/",
@@ -434,7 +440,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-06-29T04:32:28.940251Z",
+  "generated": "2024-06-30T07:17:56.077011Z",
   "generator": "pub",
   "generatorVersion": "3.1.5"
 }

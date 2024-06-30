@@ -1,6 +1,10 @@
 import 'dart:convert';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
+import 'package:path/path.dart'; // Import path for basename method
 
 import '../../StorageService.dart';
 import '../../models/listMember.dart';
@@ -96,8 +100,6 @@ class AdminService {
     );
 
     if (response.statusCode == 200) {
-      // List<dynamic> jsonResponse = json.decode(response.body);
-      // return jsonResponse.map((data) => Transaction.fromJson(data)).toList();
       List<dynamic> body = json.decode(response.body);
       List<Transaction> transactions =
           body.map((dynamic item) => Transaction.fromJson(item)).toList();
@@ -150,7 +152,7 @@ class AdminService {
   // GET PREMIUM BY ID
   Future<PremiumList> getPremiumById(int id) async {
     final token = _storage.readToken();
-    final url = Uri.parse('$baseUrl/premium/$id');
+    final url = Uri.parse('$baseUrl/premium/auth/admin/$id');
     final response = await http.get(
       url,
       headers: <String, String>{
@@ -177,25 +179,46 @@ class AdminService {
       },
       body: jsonEncode({'premiumName': premiumName}),
     );
-
-    return response.statusCode == 200;
+    if (response.statusCode == 202) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  Future<bool> addPremiumWithPdf(String premiumName, PlatformFile file) async {
+//CREATE PREMIUM
+  Future<bool> uploadFile(PlatformFile file) async {
     final token = _storage.readToken();
-    final request = http.MultipartRequest('POST', Uri.parse('$baseUrl/premium'))
-      ..headers['API-TOKEN'] = token!
-      ..fields['premiumName'] = premiumName
-      ..files.add(await http.MultipartFile.fromPath('file', file.path!));
 
-    final response = await request.send();
-    final responseBody = await http.Response.fromStream(response);
+    // Determine the MIME type
+    String? mimeType = lookupMimeType(file.name);
+    if (mimeType == null) {
+      mimeType =
+          'application/octet-stream'; // Default to binary stream if MIME type is unknown
+    }
+
+    // Create a MultipartFile from the file bytes
+    var multipartFile = http.MultipartFile.fromBytes(
+      'file',
+      file.bytes!,
+      filename: basename(file.name),
+      contentType: MediaType.parse(mimeType),
+    );
+
+    var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/premium'))
+      ..files.add(multipartFile)
+      ..headers.addAll({
+        'Content-Type': 'multipart/form-data',
+        'API-TOKEN': token!,
+      });
+
+    var response = await request.send();
 
     if (response.statusCode == 200) {
       return true;
     } else {
-      print('Failed to add premium: ${responseBody.body}');
-      return false;
+      print('Failed to upload file, status code: ${response.statusCode}');
+      throw Exception('Failed to upload file');
     }
   }
 
