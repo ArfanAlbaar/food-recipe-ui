@@ -12,6 +12,7 @@ class TransactionView extends GetView<AdminController> {
 
   @override
   Widget build(BuildContext context) {
+    final AdminController controller = Get.find();
     // Fetch transactions when the view is loaded
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.fetchTransactions();

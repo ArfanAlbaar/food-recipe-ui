@@ -11,6 +11,7 @@ abstract class Routes {
   static const ADMIN = _Paths.ADMIN;
   static const CHOOSELOGIN = _Paths.CHOOSELOGIN;
   static const LOGINADMIN = _Paths.LOGINADMIN;
+  static const MANAGEMENTRECIPE = _Paths.MANAGEMENTRECIPE;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const ADMIN = '/admin';
   static const CHOOSELOGIN = '/choose-login';
   static const LOGINADMIN = '/login-admin';
+  static const MANAGEMENTRECIPE = '/management-recipe';
 }

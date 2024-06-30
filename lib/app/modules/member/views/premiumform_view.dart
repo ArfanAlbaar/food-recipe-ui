@@ -154,20 +154,19 @@ class PremiumformView extends GetView<MemberController> {
                                 phoneNumberController.text.trim();
                             controller.registerMember(
                                 username, name, password, phoneNumber);
+                            if (formKey.currentState!.validate()) {
+                              usernameController.clear();
+                              nameController.clear();
+                              passwordController.clear();
+                              phoneNumberController.clear();
+                            }
                             Get.snackbar(
                               "Berhasil",
                               "Data anda berhasil disimpan",
                               backgroundColor: bgColor,
                               colorText: hijauSage,
                             );
-                            Get.offAllNamed(
-                                Routes.LOGINMEMBER); //ARAHKAN KE PEMBAYARAN
-                            // if (formKey.currentState!.validate()) {
-                            //   usernameController.clear();
-                            //   nameController.clear();
-                            //   passwordController.clear();
-                            //   phoneNumberController.clear();
-                            // }
+                            Get.offNamed(Routes.LOGINMEMBER);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: hijauSage,
@@ -183,7 +182,7 @@ class PremiumformView extends GetView<MemberController> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Get.offNamed(Routes.HOME); //ARAHKAN KE PEMBAYARAN
+                            Get.offNamed(Routes.HOME);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: hijauSage,

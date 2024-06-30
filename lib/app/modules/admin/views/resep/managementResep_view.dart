@@ -16,6 +16,7 @@ class ManagementResep extends GetView<AdminController> {
 
   @override
   Widget build(BuildContext context) {
+    final AdminController controller = Get.find();
     // Ensuring the data is fetched when the page is opened
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.fetchAllRecipes();

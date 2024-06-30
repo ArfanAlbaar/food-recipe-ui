@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodrecipeapp/app/models/transaction.dart';
+import 'package:foodrecipeapp/app/modules/admin/views/member/managementMember_view.dart';
 import 'package:foodrecipeapp/app/widgets/colors.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../../../models/listMember.dart';
 import '../../controllers/admin_controller.dart';
 
@@ -66,7 +67,7 @@ class _UpdateMemberViewState extends State<UpdateMemberView> {
               ),
               onPressed: () {
                 controller.updateMember(widget.member.username, isPremium);
-                Get.back();
+                Get.off(ManagementMemberView());
               },
               child: Text('Update'),
             ),

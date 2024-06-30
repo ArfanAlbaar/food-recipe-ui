@@ -1,4 +1,5 @@
 import 'package:foodrecipeapp/app/modules/admin/views/loginadmin_view.dart';
+import 'package:foodrecipeapp/app/modules/admin/views/resep/managementResep_view.dart';
 import 'package:foodrecipeapp/app/modules/home/views/choose_login.dart';
 import 'package:foodrecipeapp/app/modules/member/views/member_view.dart';
 import 'package:get/get.dart';
@@ -65,5 +66,9 @@ class AppPages {
       page: () => const LoginAdminView(),
       binding: AdminBinding(),
     ),
+    GetPage(
+        name: _Paths.MANAGEMENTRECIPE,
+        page: () => const ManagementResep(),
+        binding: AdminBinding()),
   ];
 }

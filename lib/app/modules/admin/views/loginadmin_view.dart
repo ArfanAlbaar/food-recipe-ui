@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodrecipeapp/app/modules/admin/controllers/admin_controller.dart';
+import 'package:foodrecipeapp/app/modules/member/controllers/member_controller.dart';
 import 'package:foodrecipeapp/app/widgets/colors.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,6 +12,10 @@ class LoginAdminView extends GetView<AdminController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut<MemberController>(
+      () => MemberController(),
+    );
+    final MemberController memberController = Get.find();
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
     // Check if already logged in
@@ -18,6 +23,10 @@ class LoginAdminView extends GetView<AdminController> {
       // Redirect to admin page
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         Get.offNamed(Routes.ADMIN);
+      });
+    } else if (memberController.isLoggedIn.value) {
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Get.offNamed(Routes.HOME);
       });
     }
 

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:foodrecipeapp/app/models/premium_list.dart';
 import 'package:http/http.dart' as http;
 
 import 'StorageMemberService.dart';
@@ -82,6 +83,45 @@ class MemberService {
     } catch (e) {
       // Handle network error
       print('Error saat logout: $e');
+    }
+  }
+
+  static Future<dynamic> listdwonloadbymember() async {
+    final url = Uri.parse('$baseUrl/premium/auth/member/list');
+    final token = StorageMemberService().readToken();
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'X-API-TOKEN': token!,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      String jsonResponse = jsonDecode(response.body);
+      return true;
+    } else {
+      throw Exception('Failed to register');
+      return false;
+    }
+  }
+
+  Future<List<PremiumList>> getListPremium() async {
+    final token = _storage.readToken();
+    final url = Uri.parse('$baseUrl/premium/auth/member/list');
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'X-API-TOKEN': token!,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => PremiumList.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to load premiums');
     }
   }
 }

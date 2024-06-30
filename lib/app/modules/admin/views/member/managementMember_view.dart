@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodrecipeapp/app/widgets/colors.dart';
 import 'package:get/get.dart';
+
 import '../../../../models/listMember.dart';
 import '../../controllers/admin_controller.dart';
 import 'editmember_view.dart';
@@ -10,6 +11,7 @@ class ManagementMemberView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AdminController controller = Get.find();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.fetchAllMembers();
     });

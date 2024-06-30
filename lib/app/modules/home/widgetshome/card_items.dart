@@ -13,7 +13,7 @@ class CardItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.offNamed(Routes.PREMIUMFORM),
+      onTap: () => Get.toNamed(Routes.PREMIUMFORM),
       child: Padding(
         padding: const EdgeInsets.only(right: 25),
         child: Container(

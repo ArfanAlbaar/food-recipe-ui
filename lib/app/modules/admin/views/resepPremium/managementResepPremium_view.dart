@@ -18,6 +18,7 @@ class ManagementResepPremium extends GetView<AdminController> {
 
   @override
   Widget build(BuildContext context) {
+    final AdminController controller = Get.find();
     // Ensuring the data is fetched when the page is opened
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.fetchAllPremiums();
@@ -31,7 +32,7 @@ class ManagementResepPremium extends GetView<AdminController> {
         backgroundColor: hijauSage,
         actions: [
           IconButton(
-              onPressed: () => Get.to(() => AddResepPremiumView()),
+              onPressed: () => Get.off(() => AddResepPremiumView()),
               icon: const Icon(Iconsax.add5))
         ],
       ),

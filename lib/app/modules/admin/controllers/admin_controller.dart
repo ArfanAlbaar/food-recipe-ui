@@ -44,7 +44,7 @@ class AdminController extends GetxController {
     if (token != null) {
       _storage.writeToken(token);
       isLoggedIn(true);
-      Get.offAllNamed(Routes.ADMIN);
+      Get.offNamed(Routes.ADMIN);
     } else {
       Get.snackbar('Error', 'Login gagal');
     }
@@ -73,6 +73,7 @@ class AdminController extends GetxController {
   }
 
   void addFood(Resep food) async {
+    isLoading(true);
     final token = StorageService().readToken();
     final response = await http.post(
       Uri.parse('http://localhost:8080/api/recipe'),
@@ -83,15 +84,23 @@ class AdminController extends GetxController {
       body: jsonEncode(food.toJson()),
     );
 
-    if (response.statusCode == 200) {
-      recipes.add(food);
-      Get.snackbar('Success', 'Food added successfully',
-          snackPosition: SnackPosition.BOTTOM);
-      Get.to(() => ManagementResep());
-    } else {
-      print('Failed to add food: ${response.body}');
+    try {
+      if (response.statusCode == 200) {
+        recipes.add(food);
+        Get.snackbar('Success', 'Recipe added successfully',
+            snackPosition: SnackPosition.BOTTOM);
+        isLoading(false);
+        Get.off(() => ManagementResep());
+      } else {
+        isLoading(false);
+        print('Failed to add food: ${response.body}');
+        Get.snackbar('Error', 'Failed to add food',
+            snackPosition: SnackPosition.BOTTOM);
+      }
+    } catch (e) {
       Get.snackbar('Error', 'Failed to add food',
           snackPosition: SnackPosition.BOTTOM);
+      isLoading(false);
     }
   }
 
@@ -99,9 +108,9 @@ class AdminController extends GetxController {
     isLoading(true);
     final response = await _adminService.editFood(index, newFood);
     if (response) {
-      Get.snackbar('Success', 'Food updated successfully',
+      Get.snackbar('Success', 'Recipe updated successfully',
           snackPosition: SnackPosition.BOTTOM);
-      Get.to(() => ManagementResep());
+      Get.off(() => ManagementResep());
     } else {
       Get.snackbar('Error', 'Failed to update food',
           snackPosition: SnackPosition.BOTTOM);
@@ -181,7 +190,7 @@ class AdminController extends GetxController {
             backgroundColor: hijauSage,
             colorText: Colors.white);
         isLoading(false);
-        Get.to(() => ManagementResepPremium());
+        Get.off(() => ManagementResepPremium());
         return success;
       } else {
         Get.snackbar('Error', 'Failed to update premium name',
@@ -211,7 +220,7 @@ class AdminController extends GetxController {
             backgroundColor: hijauSage,
             colorText: Colors.white);
         isLoading(false);
-        Get.to(() => ManagementResepPremium());
+        Get.off(() => ManagementResepPremium());
       }
     } catch (e) {
       throw e;

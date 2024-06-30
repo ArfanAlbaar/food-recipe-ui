@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../admin/controllers/admin_controller.dart';
 import '../controllers/member_controller.dart';
 
 class LoginMemberView extends GetView<MemberController> {
@@ -13,10 +14,18 @@ class LoginMemberView extends GetView<MemberController> {
   Widget build(BuildContext context) {
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+    Get.lazyPut<AdminController>(
+      () => AdminController(),
+    );
+    final AdminController adminController = Get.find();
 
     // Check if already logged in
     if (controller.isLoggedIn.value) {
-      // Redirect to admin page
+      // Redirect to member page
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Get.offNamed(Routes.MEMBER);
+      });
+    } else if (adminController.isLoggedIn.value) {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         Get.offNamed(Routes.MEMBER);
       });
@@ -109,7 +118,7 @@ class LoginMemberView extends GetView<MemberController> {
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-                  Get.offNamed(Routes.PREMIUMFORM);
+                  Get.toNamed(Routes.PREMIUMFORM);
                 },
                 child: Text(
                   "Mau Jadi Member? KLIK DISINI!",

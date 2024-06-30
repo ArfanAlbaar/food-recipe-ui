@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodrecipeapp/app/modules/admin/views/resepPremium/managementResepPremium_view.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -55,11 +56,11 @@ class _EditPremiumViewState extends State<EditPremiumView> {
           .editPremium(widget.id, _nameController.text)
           .then((success) {
         if (success) {
-          Get.back();
-          Get.snackbar('Success', 'Premium name updated successfully',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.green,
-              colorText: Colors.white);
+          Get.off(ManagementResepPremium());
+          // Get.snackbar('Success', 'Premium name updated successfully',
+          //     snackPosition: SnackPosition.BOTTOM,
+          //     backgroundColor: Colors.green,
+          //     colorText: Colors.white);
         } else {
           Get.snackbar('Error', 'Failed to update premium name',
               snackPosition: SnackPosition.BOTTOM,

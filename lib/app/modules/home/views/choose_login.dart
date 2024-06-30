@@ -5,7 +5,6 @@ import 'package:foodrecipeapp/app/modules/member/controllers/member_controller.d
 import 'package:foodrecipeapp/app/widgets/colors.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 
 import '../../../routes/app_pages.dart';
 
@@ -29,12 +28,12 @@ class ChooseLogin extends GetView<RecipeController> {
     if (adminController.isLoggedIn.value) {
       // Redirect to admin page
       WidgetsBinding.instance?.addPostFrameCallback((_) {
-        Get.toNamed(Routes.ADMIN);
+        Get.offNamed(Routes.ADMIN);
       });
     } else if (memberController.isLoggedIn.value) {
       // Redirect to member page
       WidgetsBinding.instance?.addPostFrameCallback((_) {
-        Get.toNamed(Routes.MEMBER);
+        Get.offNamed(Routes.MEMBER);
       });
     }
     return Scaffold(
