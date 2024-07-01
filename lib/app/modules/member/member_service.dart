@@ -142,4 +142,43 @@ class MemberService {
       throw Exception('Failed to download file');
     }
   }
+
+  Future<Map<String, dynamic>> currentMember() async {
+    final token = _storage.readToken();
+    final url = Uri.parse('$baseUrl/member/current');
+
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'X-API-TOKEN': token!,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+      return jsonResponse['data'];
+    } else {
+      throw Exception('Failed to download file');
+    }
+  }
+
+  Future<bool> createTransaction(String amount) async {
+    final token = _storage.readToken();
+    final url = Uri.parse('$baseUrl/transaction');
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'X-API-TOKEN': token!,
+      },
+      body: jsonEncode(<String, String>{
+        'amount': amount,
+      }),
+    );
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed to create transaction');
+    }
+  }
 }

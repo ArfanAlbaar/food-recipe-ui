@@ -1,5 +1,6 @@
 import 'dart:html' as html; // for web
 
+import 'package:flutter/material.dart';
 import 'package:foodrecipeapp/app/models/premium_list.dart';
 import 'package:foodrecipeapp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
@@ -33,6 +34,7 @@ class MemberController extends GetxController {
     super.onInit();
     final token = _storage.readToken();
     isLoggedIn(token != null);
+    fetchCurrentMember();
   }
 
   //LOGIN
@@ -155,4 +157,35 @@ class MemberController extends GetxController {
 
   // isDownloading.value = false;
   //     status.value = 'Failed to download file, Try Again later';
+  Map<String, dynamic>? memberData;
+
+  String? errorMessage;
+  final formKey = GlobalKey<FormState>();
+
+  Future<void> fetchCurrentMember() async {
+    isLoading(true);
+
+    try {
+      memberData = await _memberService.currentMember();
+      errorMessage = null;
+    } catch (e) {
+      errorMessage = 'Failed to fetch member data: $e';
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> createTransaction(String amount) async {
+    isLoading(true);
+    try {
+      final response = await _memberService.createTransaction(amount);
+      if (response) {
+        Get.snackbar('Success', 'Transaksi berhasil');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Transaksi gagal');
+    } finally {
+      isLoading(false);
+    }
+  }
 }
